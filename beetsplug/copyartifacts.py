@@ -32,7 +32,7 @@ class CopyArtifactsPlugin(BeetsPlugin):
 
         self.register_listener('item_moved', self.collect_artifacts)
         self.register_listener('item_copied', self.collect_artifacts)
-        self.register_listener('cli_exit', self.process_events)
+        self.register_listener('import_task_files', self.process_events)
 
     def _destination(self, filename, mapping):
         '''Returns a destination path a file should be moved to. The filename
@@ -193,7 +193,4 @@ class CopyArtifactsPlugin(BeetsPlugin):
 
         self._log.info('Moving artifact: {0}'.format(os.path.basename(dest_file)))
         beets.util.move(source_file, dest_file)
-
-        dir_path = os.path.split(source_file)[0]
-        beets.util.prune_dirs(dir_path, clutter=config['clutter'].as_str_seq())
 
